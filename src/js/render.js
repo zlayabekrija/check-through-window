@@ -25,6 +25,8 @@
         const humidity = city.cloneNode(true);
         const wind = city.cloneNode(true);
         const icon = img.cloneNode(true);
+        temeperature.classList.add('temp');
+        wind.classList.add('wind');
         icon.src = "http://openweathermap.org/img/w/" + data.weather[0].icon + '.png';
         temeperature.textContent = 'Temperature: ' + data.main.temp + ' C';
         humidity.textContent = 'Humidity: ' + data.main.humidity + ' %';

@@ -8,9 +8,15 @@ input.setAttribute('type','text');
 input.classList.add('form-control','mt-3','mb-3');
 input.placeholder = 'Please enter your city name'
 const sub = document.createElement('span');
-sub.classList.add('w-100','btn','btn-primary');
+const metric = sub.cloneNode(true);
+const imperial = sub.cloneNode(true);
+metric.classList.add('btn','btn-primary','w-50');
+metric.textContent = 'Metric';
+imperial.classList.add('btn','btn-warning','w-50');
+imperial.textContent = 'Imperial'
+sub.classList.add('w-100','btn','btn-primary','mt-1');
 sub.textContent = 'Submit';
-formDiv.append(input,sub);
+formDiv.append(input,metric,imperial,sub);
 parent.append(formDiv);
 const line = document.createElement('hr');
 line.classList.add('line');
