@@ -18,9 +18,10 @@ Steps to run this app:
 
 - run `npm run server` to run app on local machine.
 
-- enyoj.
+- enjoy.
 
 Still looking for some api with houmorous comments, feel free to suggest.
+[https://loving-goldwasser-4ea1ab.netlify.com/] (Live preview) 
 
 Also, feel free to fork, commit and comment :) 
 
