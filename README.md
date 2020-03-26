@@ -21,7 +21,7 @@ Steps to run this app:
 - enjoy.
 
 Still looking for some api with houmorous comments, feel free to suggest.
-[Live preview](https://loving-goldwasser-4ea1ab.netlify.com/) 
+[Live preview](https://check-through-window.netlify.com) 
 
 Also, feel free to fork, commit and comment :) 
 
