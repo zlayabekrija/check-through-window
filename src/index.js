@@ -1,62 +1,75 @@
-import {form,getFormData} from '../src/js/form'
-import {extract} from '../src/js/render'
-import {waitForIt} from '../src/js/loadingScreen'
-import {converter} from '../src/js/converter'
-
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import { form, getFormData } from '../src/js/form'
+import { extract, modal } from '../src/js/render'
+import { waitForIt } from '../src/js/loadingScreen'
+import { converter } from '../src/js/converter'
+const flashing = document.createElement('div')
+const master = document.getElementById('weather')
 window.onload = () => {
   form();
   getLocation();
 }
 
 // when form is used
-document.addEventListener('click',e => {
-    if(e.target.textContent === 'Submit'){
-      clearInfo();
-      let city = getFormData();
-      grabIt(city);
-    }
-    if(e.target.textContent === 'Imperial' || e.target.textContent === 'Metric'){
-      converter(e.target.textContent);
-    }
+document.addEventListener('click', e => {
+  if (e.target.textContent === 'Submit') {
+    clearInfo();
+    let city = getFormData();
+    grabIt(city, waitForIt, extract, "lds-ring", flashing, master);
+  }
+  if (e.target.textContent === 'Imperial' || e.target.textContent === 'Metric') {
+    converter(e.target.textContent);
+  }
 })
 // until result is fetched
 
-const grabIt = city => {
-   waitForIt();
-    fetch("https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=7be0a02288cc1414823be7512913a934",{mode: 'cors'})
-    .then(function(response) {
-      document.querySelector('.lds-ring').classList.remove('lds-ring');
-      return response.json();
-    }).then(function(response){
-      return extract(response);
-    })
-    .catch(function(error) {
-      throw new Error(error);
-    });
+const grabIt = async (city, loader, data, className, loading, main) => {
+  loader(loading, main);
+  try {
+    const res = await fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=7be0a02288cc1414823be7512913a934", { mode: 'cors' })
+    const response = await res.json()
+    data(response, className)
+  } catch (e) {
+    modal(true)
+  }
 }
 // fetching process
-const success = pos =>{
-  waitForIt();
-  fetch("https://api.openweathermap.org/data/2.5/weather?lat="+pos.coords.latitude+"&lon="+pos.coords.longitude+"&units=metric&appid=7be0a02288cc1414823be7512913a934",{mode: 'cors'})
-  .then(function(response) {
-    document.querySelector('.lds-ring').classList.remove('lds-ring');
-    return response.json();
-  }).then(function(response){
-    return extract(response);
-  })
-  .catch(function(error) {
-    throw new Error(error);
-  });
+const success = async pos => {
+  waitForIt(flashing, master);
+  try {
+    const res = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + pos.coords.latitude + "&lon=" + pos.coords.longitude + "&units=metric&appid=7be0a02288cc1414823be7512913a934", { mode: 'cors' })
+    const response = await res.json()
+    extract(response, "lds-ring")
+  } catch (e) {
+    modal(true)
+  }
 };
 // if navigator is allowed
 const getLocation = () => {
   navigator.geolocation.getCurrentPosition(success);
 }
 const clearInfo = () => {
-    if (document.querySelector('.info') !== null){
-      document.querySelector('.info').innerHTML = '';
-    }
-  
+  if (document.querySelector('.info') !== null) {
+    document.querySelector('.info').innerHTML = '';
+  }
+
 }
 
-// 7be0a02288cc1414823be7512913a934 api key 
+document.addEventListener("click", e => {
+  if (e.target.innerText === "X") {
+    let toRemove = document.querySelector(".main-frame")
+    if (toRemove) {
+      document.querySelector("#weather").removeChild(toRemove)
+    }
+  }
+})
+document.addEventListener("keydown", e => {
+  if (e.keyCode === 27) {
+    let toRemove = document.querySelector(".main-frame")
+    if (toRemove) {
+      document.querySelector("#weather").removeChild(toRemove)
+    }
+  }
+})
+// 7be0a02288cc1414823be7512913a934 api key

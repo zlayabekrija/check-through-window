@@ -2,7 +2,7 @@
 const form = () => {
 const parent = document.getElementById('weather');
 const formDiv = document.createElement('div');
-formDiv.classList.add('w-50','m-auto','container');
+formDiv.classList.add('m-auto','container',"reform");
 const input = document.createElement('input');
 input.setAttribute('type','text');
 input.classList.add('form-control','mt-3','mb-3');

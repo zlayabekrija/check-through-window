@@ -8,7 +8,8 @@ Weather app project, built on top of Openweather api, with additonal help of fla
 
 For assetes menagment the webpack was used, and for making api calls built in javascript Fetch Api is used.
 
-
+Known bugs:
+ - Firefox can't read navigator and thus no api calls can be made, using browser native navigator.
 
 Steps to run this app:
 

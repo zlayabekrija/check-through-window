@@ -1,6 +1,5 @@
-const flashing = document.createElement('div');
-const master = document.getElementById('weather');
-const waitForIt = () => {
+
+const waitForIt = (flashing,master) => {
     const div1 = document.createElement('div');
     const div2 = div1.cloneNode(true);
     const div3 = div1.cloneNode(true);
