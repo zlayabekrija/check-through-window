@@ -27,7 +27,7 @@ document.addEventListener('click', e => {
 const grabIt = async (city, loader, data, className, loading, main) => {
   loader(loading, main);
   try {
-    const res = await fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=7be0a02288cc1414823be7512913a934", { mode: 'cors' })
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.API_KEY}`, { mode: 'cors' })
     const response = await res.json()
     data(response, className)
   } catch (e) {
@@ -38,7 +38,7 @@ const grabIt = async (city, loader, data, className, loading, main) => {
 const success = async pos => {
   waitForIt(flashing, master);
   try {
-    const res = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + pos.coords.latitude + "&lon=" + pos.coords.longitude + "&units=metric&appid=7be0a02288cc1414823be7512913a934", { mode: 'cors' })
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&units=metric&appid=${process.env.API_KEY}`,{ mode: 'cors' })
     const response = await res.json()
     extract(response, "lds-ring")
   } catch (e) {
@@ -72,4 +72,4 @@ document.addEventListener("keydown", e => {
     }
   }
 })
-// 7be0a02288cc1414823be7512913a934 api key
+
